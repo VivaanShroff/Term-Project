@@ -3,7 +3,8 @@ from cmu_112_graphics import *
 
 import math, random
 
-from NewTermProject import *
+from ObstacleClasses import *
+from w import *
 
 #Referenced from Sidescroller from Animations Part 4 Notes.
 def appStarted(app):
@@ -21,7 +22,12 @@ def appStarted(app):
     app.rectangle = Rectangle(app.posX, app.posY, 'Red')
     app.bullets = Bullet(app.posX, app.posY, 'Black')
     app.imageog = app.loadImage('cartoon-map-bear-baby-clipart-png-image.png')
+    #Got this image from https://pikbest.com/png-images/pngtree-cartoon-map-bear-baby-clipart_5880728.html
     app.image = app.scaleImage(app.imageog, 1/10)
+    enemyimageog = app.loadImage('https://www.kindpng.com/picc/m/226-2266291_enemy-sprite-sheet-sprite-sheet-enemy-png-transparent.png')
+    #Got this image from https://www.kindpng.com/imgv/ibTxTim_enemy-sprite-sheet-sprite-sheet-enemy-png-transparent/
+    app.enemyimage = app.scaleImage(enemyimageog, 1/3)
+    app.enemy = Enemy(app.posX//2, app.posY - 10, 30, 30, 80, app.enemyimage)
 
 def timerFired(app):
     if app.isGameOver == False:
@@ -52,6 +58,11 @@ def redrawAll(app, canvas):
         canvas.create_oval(cx-10, cy-10, cx+10, cy+10, fill='lightGreen')
         app.rectangle.draw(canvas, cx)
         app.bullets.draw(canvas, cx)
+        # app.another.draw(canvas, cx)
+    if app.isGameOver:
+        canvas.create_rectangle(0, 0, app.width, app.height, fill = 'Blue')
+        canvas.create_text(app.width//2, app.height//2, text = 'Game Over',
+        font = 'Helvetica 30')
 
 #class Animal:
 #     def __init__(self):
